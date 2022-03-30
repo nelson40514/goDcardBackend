@@ -1,30 +1,49 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
-    "strings"
-    "log"
+	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func sayhelloName(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Recive a new requests")
-    r.ParseForm()  //解析參數，預設是不會解析的
-    fmt.Println(r.Form)  //這些資訊是輸出到伺服器端的列印資訊
-    fmt.Println("path", r.URL.Path)
-    fmt.Println("scheme", r.URL.Scheme)
-    fmt.Println(r.Form["url_long"])
-    for k, v := range r.Form {
-        fmt.Println("key:", k)
-        fmt.Println("val:", strings.Join(v, ""))
-    }
-    fmt.Fprintf(w, "Hello astaxie!") //這個寫入到 w 的是輸出到客戶端的
+type ResData struct {
+	Id       string `json:"id"`
+	ShortUrl string `json:"shortUrl"`
+}
+type ReqData struct {
+	Url      string `json:"url"`
+	ExpireAt string `json:"expireAt"`
+}
+
+func rest(c *gin.Context) {
+	req := new(ReqData)
+	err := c.BindJSON(&req)
+	if err != nil {
+		c.Status(http.StatusMethodNotAllowed)
+		return
+	}
+	fmt.Println("ExpireAt", req.ExpireAt)
+	fmt.Println("Url", req.Url)
+
+	res := new(ResData)
+	c.JSON(http.StatusOK, res)
+}
+
+func redirect(c *gin.Context) {
+	id := c.Param("id")
+	fmt.Println(id)
+	c.JSON(http.StatusOK, id)
+}
+
+func index(c *gin.Context) {
+	c.Status(http.StatusNotFound)
 }
 
 func main() {
-    http.HandleFunc("/", sayhelloName) //設定存取的路由
-    err := http.ListenAndServe(":9090", nil) //設定監聽的埠
-    if err != nil {
-        log.Fatal("ListenAndServe: ", err)
-    }
+	server := gin.Default()
+	server.POST("/api/v1/urls", rest)
+	server.Any("/:id", redirect)
+	server.GET("/", index)
+	server.Run(":8888")
 }

@@ -10,7 +10,7 @@ func sum(a []int, c chan int) {
 	c <- total // send total to c
 }
 
-func main() {
+func main_routine() {
 	a := []int{7, 2, 8, -9, 4, 0}
 
 	c := make(chan int)
