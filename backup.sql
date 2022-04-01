@@ -23,9 +23,10 @@ DROP TABLE IF EXISTS `links`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `links` (
-  `Id` char(10) DEFAULT NULL,
+  `Id` char(10) NOT NULL,
   `ExpireDate` datetime DEFAULT NULL,
-  `OriginalUrl` varchar(256) DEFAULT NULL
+  `OriginalUrl` varchar(256) NOT NULL,
+  PRIMARY KEY (`Id`,`OriginalUrl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -35,6 +36,7 @@ CREATE TABLE `links` (
 
 LOCK TABLES `links` WRITE;
 /*!40000 ALTER TABLE `links` DISABLE KEYS */;
+INSERT INTO `links` VALUES ('wRahvr','2022-04-05 13:00:05','http://google.com/');
 /*!40000 ALTER TABLE `links` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -47,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-01 20:04:18
+-- Dump completed on 2022-04-01 20:13:33
