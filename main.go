@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,6 +18,26 @@ type ReqData struct {
 	ExpireAt string `json:"expireAt"`
 }
 
+// Generate a random string of [a-zA-Z0-9]
+func allowdChar() byte {
+	index := 48 + rand.Intn(62)
+	if index >= 58 {
+		index += 7
+	}
+	if index >= 91 {
+		index += 6
+	}
+	return byte(index)
+}
+
+func randomString(len int) string {
+	bytes := make([]byte, len)
+	for i := 0; i < len; i++ {
+		bytes[i] = allowdChar()
+	}
+	return string(bytes)
+}
+
 func rest(c *gin.Context) {
 	req := new(ReqData)
 	err := c.BindJSON(&req)
@@ -25,8 +47,9 @@ func rest(c *gin.Context) {
 	}
 	fmt.Println("ExpireAt", req.ExpireAt)
 	fmt.Println("Url", req.Url)
-
 	res := new(ResData)
+	res.Id = randomString(6)
+	res.ShortUrl = "http://localhost/" + res.Id
 	c.JSON(http.StatusOK, res)
 }
 
@@ -42,8 +65,9 @@ func index(c *gin.Context) {
 
 func main() {
 	server := gin.Default()
+	rand.Seed(time.Now().UnixNano())
 	server.POST("/api/v1/urls", rest)
 	server.Any("/:id", redirect)
 	server.GET("/", index)
-	server.Run(":8888")
+	server.Run(":80")
 }
