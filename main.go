@@ -1,12 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"math/rand"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type ResData struct {
@@ -16,6 +18,13 @@ type ResData struct {
 type ReqData struct {
 	Url      string `json:"url"`
 	ExpireAt string `json:"expireAt"`
+}
+
+// Check Err status
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
 
 // Generate a random string of [a-zA-Z0-9]
@@ -64,10 +73,32 @@ func index(c *gin.Context) {
 }
 
 func main() {
+	db, err := sql.Open("mysql", "root:12345678@/go?charset=utf8")
+	checkErr(err)
+
+	//查詢資料
+	rows, err := db.Query("SELECT * FROM go.links")
+	checkErr(err)
+
+	for rows.Next() {
+		var Id string
+		var ExpireAt string
+		var OriginalUrl string
+		err = rows.Scan(&Id, &ExpireAt, &OriginalUrl)
+		checkErr(err)
+		fmt.Println("-----------")
+		fmt.Println("Id:,", Id)
+		fmt.Println("ExpireAt:", ExpireAt)
+		fmt.Println("OriginalUrl", OriginalUrl)
+	}
+	fmt.Println("-----End Of DB query------")
+
 	server := gin.Default()
+
 	rand.Seed(time.Now().UnixNano())
+
 	server.POST("/api/v1/urls", rest)
-	server.Any("/:id", redirect)
+	server.GET("/:id", redirect)
 	server.GET("/", index)
 	server.Run(":80")
 }
