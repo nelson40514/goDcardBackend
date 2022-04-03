@@ -24,7 +24,7 @@ const (
 )
 
 // Generate a random string of [a-zA-Z0-9]
-func allowdChar() byte {
+func allowedChar() byte {
 	index := 48 + rand.Intn(62)
 	if index >= 58 {
 		index += 7
@@ -39,7 +39,7 @@ func allowdChar() byte {
 func randomString(len int) string {
 	bytes := make([]byte, len)
 	for i := 0; i < len; i++ {
-		bytes[i] = allowdChar()
+		bytes[i] = allowedChar()
 	}
 	return string(bytes)
 }

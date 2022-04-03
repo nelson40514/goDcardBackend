@@ -4,18 +4,21 @@ import (
 	"testing"
 )
 
-func Test_Division_1(t *testing.T) {
-	// if i, e := Division(6, 2); i != 3 || e != nil { //try a unit test on function
-	// 	t.Error("除法函式測試沒透過") // 如果不是如預期的那麼就報錯
-	// } else {
-	// 	t.Log("第一個測試通過了") //記錄一些你期望記錄的資訊
-	// }
+func Test_allowedChar(t *testing.T) {
+	//try a unit test on allowdChar
+	if c := allowedChar(); c < 48 || (57 < c && c < 65) || (90 < c && c < 97) {
+		t.Error("allowedChar() return not in [0-9A-Za-z]")
+	} else {
+		t.Log("allowedChar() success with:", c)
+	}
 }
 
-func Test_Division_2(t *testing.T) {
-	// if _, e := Division(6, 0); e == nil { //try a unit test on function
-	// 	t.Error("Division did not work as expected.") // 如果不是如預期的那麼就報錯
-	// } else {
-	// 	t.Log("one test passed.", e) //記錄一些你期望記錄的資訊
-	// }
+func Test_randomString(t *testing.T) {
+	//try a unit test on randomString
+	Length := 6
+	if s := randomString(Length); len(s) != Length {
+		t.Error("randomString() return error string")
+	} else {
+		t.Log("randomString() success return string:", s)
+	}
 }
