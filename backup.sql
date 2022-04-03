@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for macos12.2 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for macos12.2 (arm64)
 --
--- Host: localhost    Database: go
+-- Host: us-cdbr-east-05.cleardb.net    Database: heroku_2a40d52308e3ec4
 -- ------------------------------------------------------
--- Server version	8.0.28
+-- Server version	5.6.50-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,8 +26,8 @@ CREATE TABLE `links` (
   `Id` char(10) NOT NULL,
   `ExpireDate` datetime DEFAULT NULL,
   `OriginalUrl` varchar(256) NOT NULL,
-  PRIMARY KEY (`Id`,`OriginalUrl`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,17 +36,6 @@ CREATE TABLE `links` (
 
 LOCK TABLES `links` WRITE;
 /*!40000 ALTER TABLE `links` DISABLE KEYS */;
-INSERT INTO `links` VALUES ('wRahvr','2022-04-05 13:00:05','http://google.com/');
+INSERT INTO `links` VALUES ('5dSsgT','2022-04-04 01:55:41','http://www.yahoo.com/'),('MiSFaE','2022-04-04 02:55:41','http://www.yahoo.com/'),('PAdXxA','2022-04-04 01:55:41','http://www.yahoo.com/');
 /*!40000 ALTER TABLE `links` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2022-04-01 20:13:33
